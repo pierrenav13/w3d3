@@ -1,3 +1,5 @@
+require 'byebug'
+
 def range(n_s, n_e)
   return [n_s] if n_e == n_s + 1
   range(n_s, n_e - 1) + [n_e - 1]
@@ -66,3 +68,27 @@ end
 # p fibonacci(4)
 # p fibonacci(5)
 # p fibonacci(6)
+
+
+def bsearch(array, target)
+    middle_idx = array.length / 2
+    middle = array[middle_idx]
+
+    
+    return middle_idx if target == middle
+    return nil if array.length == 1
+    if target < middle
+        return bsearch(array[0...middle_idx], target)
+    elsif target > middle
+        return middle_idx + bsearch(array[(middle_idx + 1)..-1])
+    end
+end
+
+p bsearch([1, 2, 3], 1) # => 0
+p bsearch([2, 3, 4, 5], 3) # => 1
+p bsearch([2, 4, 6, 8, 10], 6) # => 2
+debugger
+p bsearch([1, 3, 4, 5, 9], 5) # => 3
+p bsearch([1, 2, 3, 4, 5, 6], 6) # => 5
+p bsearch([1, 2, 3, 4, 5, 6], 0) # => nil
+p bsearch([1, 2, 3, 4, 5, 7], 6) # => nil
