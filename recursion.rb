@@ -105,6 +105,29 @@ def merge_sort(array)
 
 end
 
-def merge(ele_1,ele_2)
-    
+def merge(ele_1, ele_2)
+    merged = ele_1 + ele_2
+
+    merged.each_with_index do |el1, i1|
+        merged.each_with_index do |el2, i2|
+            if i2 > i1
+                if el1 > el2
+                    merged[i1], merged[i2] = merged[i2], merged[i1]
+                end
+            end
+        end
+    end
+
+
+    # ele_1.each do |el1|
+    #     ele_2.each do |el2|
+    #         if el2 < el1
+    #             merged << el2
+    #             #break
+    #         else
+    #             merged << el1
+    #         end
+    #     end
+    # end
+    merged
 end
