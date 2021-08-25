@@ -144,3 +144,27 @@ def greedy_make_change(num, coins = [25, 10, 5, 1])
     num -= coins[0]*num_coins
     result += greedy_make_change(num,coins[1..-1])
 end
+
+def make_better_change(num, coins = [25, 10, 5, 1])
+    return [] if num == 0
+    results = []
+    result_2 = []
+    result = []
+
+    coins.each_with_index do |coin, i|
+        if num >= coin
+            num -= coin
+            result << coin 
+            result_2 << coin     
+            return result += make_better_change(num, coins[i..-1])
+            # result_2 += make_better_change(num, coins[i+1..-1])
+            # if result.length < result_2.length
+            #     return result
+            # else
+            #     result_2
+            # end
+        end
+    end
+    result
+
+end
