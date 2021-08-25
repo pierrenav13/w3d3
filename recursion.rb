@@ -117,51 +117,68 @@ def merge(ele_1, ele_2)
   end
 end
 
-
 def subsets(array)
-    return [[]] if array.length == 0
-    return [[],array] if array.length == 1
-    debugger
-    subs = subsets(array[0...-1])
-    subs.each do |ele|
-        unless ele.include?(array[-1])
-            subs << ele+[array[-1]]
-        end
+  return [[]] if array.length == 0
+  return [[], array] if array.length == 1
+  subs = subsets(array[0...-1])
+  subs.each do |ele|
+    unless ele.include?(array[-1])
+      subs << ele + [array[-1]]
     end
-    subs
+  end
+  subs
 end
 
 def permutations(array)
-    subsets = subsets(array)
-    return array if subsets.include?(array)
+  subsets = subsets(array)
+  subsets_2 = subsets(array)
+  subsets.map do |ele|
+    array.each do |num|
+      unless ele.include?(num)
+        ele << num
+      end
+    end
+  end
+  subsets_2.map do |ele|
+    array.reverse.each do |num|
+      unless ele.include?(num)
+        ele << num
+      end
+    end
+  end
+  return (subsets + subsets_2).uniq
 end
 
 def greedy_make_change(num, coins = [25, 10, 5, 1])
-    return [] if num == 0
-    result = Array.new
-    num_coins = num / coins[0]
-    num_coins.times {result << coins[0]}
-    num -= coins[0]*num_coins
-    result += greedy_make_change(num,coins[1..-1])
+  return [] if num == 0
+  result = Array.new
+  num_coins = num / coins[0]
+  num_coins.times { result << coins[0] }
+  num -= coins[0] * num_coins
+  result += greedy_make_change(num, coins[1..-1])
 end
 
 def make_better_change(num, coins = [25, 10, 5, 1])
-    return [] if num == 0
-    results = []
-    result_2 = nil
-    result = []
+  return [] if num == 0
+  results = []
+  result_2 = nil
+  result = []
 
-    coins.each_with_index do |coin, i|
-        n = num
-        if n >= coin
-            n -= coin
-            result = [coin] 
-            result += make_better_change(n, coins)
-            if result_2.nil? || result.length < result_2.length 
-                result_2 = result
-            end
-        end
+  coins.each_with_index do |coin, i|
+    n = num
+    if n >= coin
+      n -= coin
+      result = [coin]
+      result += make_better_change(n, coins)
+      if result_2.nil? || result.length < result_2.length
+        result_2 = result
+      end
     end
-    result_2
+  end
+  result_2
+end
 
+def perm(array)
+  #debugger
+  p array.permutation(array.length).to_a
 end
