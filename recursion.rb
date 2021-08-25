@@ -130,3 +130,9 @@ def subsets(array)
     end
     subs
 end
+
+def permutations(array)
+    subsets = subsets(array)
+    return array if subsets.include?(array)
+    
+end
