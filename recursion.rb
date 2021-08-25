@@ -150,21 +150,20 @@ def make_better_change(num, coins = [25, 10, 5, 1])
     results = []
     result_2 = []
     result = []
-
+    total = num
     coins.each_with_index do |coin, i|
+        debugger
         if num >= coin
             num -= coin
             result << coin 
             result_2 << coin     
-            return result += make_better_change(num, coins[i..-1])
-            # result_2 += make_better_change(num, coins[i+1..-1])
-            # if result.length < result_2.length
-            #     return result
-            # else
-            #     result_2
-            # end
+            result += make_better_change(num, coins[i..-1])
+            result_2 += make_better_change(num, coins[i+1..-1]) 
+            if (result.length < result_2.length && result_2.sum == total)
+                return result
+            elsif (result_2.length < result.length && result.sum == total)
+                return result_2
+            end
         end
     end
-    result
-
 end
