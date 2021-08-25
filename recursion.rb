@@ -134,5 +134,13 @@ end
 def permutations(array)
     subsets = subsets(array)
     return array if subsets.include?(array)
-    
+end
+
+def greedy_make_change(num, coins = [25, 10, 5, 1])
+    return [] if num == 0
+    result = Array.new
+    num_coins = num / coins[0]
+    num_coins.times {result << coins[0]}
+    num -= coins[0]*num_coins
+    result += greedy_make_change(num,coins[1..-1])
 end
