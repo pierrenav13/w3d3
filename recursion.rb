@@ -148,22 +148,20 @@ end
 def make_better_change(num, coins = [25, 10, 5, 1])
     return [] if num == 0
     results = []
-    result_2 = []
+    result_2 = nil
     result = []
-    total = num
+
     coins.each_with_index do |coin, i|
-        debugger
-        if num >= coin
-            num -= coin
-            result << coin 
-            result_2 << coin     
-            result += make_better_change(num, coins[i..-1])
-            result_2 += make_better_change(num, coins[i+1..-1]) 
-            if (result.length < result_2.length && result_2.sum == total)
-                return result
-            elsif (result_2.length < result.length && result.sum == total)
-                return result_2
+        n = num
+        if n >= coin
+            n -= coin
+            result = [coin] 
+            result += make_better_change(n, coins)
+            if result_2.nil? || result.length < result_2.length 
+                result_2 = result
             end
         end
     end
+    result_2
+
 end
